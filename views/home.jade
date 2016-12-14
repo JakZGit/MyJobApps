@@ -1,0 +1,45 @@
+extends userLayout
+block content
+  h1 Welcome, #{user.firstname}!
+  div
+    form(action="/users/add" method="POST")
+        .col-lg-12
+            .form-group.col-lg-3
+                input.form-control(placeholder="Company" name="name")
+            .form-group.col-lg-3
+                input.form-control(placeholder="Position" name="position")
+            .form-group.col-lg-3
+                input.form-control(placeholder="Description" name="descriptionLink")
+            .form-group.col-lg-3
+                button.form-control.btnColor(type="submit" value="add") Add
+  div
+    table(id="example" class="table table-striped table-bordered" cellspacing="0" width="100%")
+        thead
+            tr
+                th Company
+                th Position
+                th Description
+                th Register Date
+                th Remove
+        tbody
+            if(job_infos)
+                each item in job_infos
+                    tr
+                        td !{item.company}
+                        td !{item.position}
+                        td
+                            a(href="#{item.descriptionLink}") Description
+                        td !{item.registerDate}
+                        td
+                            form(action="/users/remove/#{item._id}" method = "post")
+                                button(type='submit') Remove
+
+
+  script.
+    $(document).ready(function(){
+        $('#example').DataTable();
+    });
+
+
+
+
